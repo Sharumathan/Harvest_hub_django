@@ -1,0 +1,200 @@
+{% extends 'layouts/main.html'%}
+{% load static%}
+{% block title %}
+Home
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/stylle.css'%}">
+{% for message in messages%}
+     <script>
+     alert('{{message}}')
+     </script>
+{%endfor%}
+{% endblock css%}
+
+{% block content %}
+<div class="carousel">
+        
+     <div class="list">
+         <div class="item">
+             <img src="{% static 'images/image/landscape-lone-tree-7087x4724-9746.jpg' %}">
+             <div class="content">
+                 <div class="author">MODERN</div>
+                 <div class="title">HARVEST HUB</div>
+                 <div class="topic">Precision </div>
+                 <div class="des">
+                     Precision agriculture utilizes technology like GPS, sensors, and drones to optimize crop yields by precisely managing resources such as water, fertilizers, and pesticides, resulting in increased efficiency and sustainability.
+                      </div>
+                 <div class="buttons">
+                    {% if request.user.is_authenticated %}
+                    <button><a href="products_sell" class="shop">SHOP</a></button>
+                   {%else%}
+                   <button><a href="account" class="shop">LOGIN</a></button>
+                   {%endif%}
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/tulips-field-3840x2160-16243.jpg' %}">
+             <div class="content">
+                 <div class="author">MODERN</div>
+                 <div class="title">HARVEST HUB</div>
+                 <div class="topic">Smart Harvest</div>
+                 <div class="des">
+                     Smart harvesting integrates robotics, AI, and data analytics to automate and optimize the harvesting process. By employing autonomous machinery equipped with sensors and computer vision, farmers can efficiently gather crops at the peak of ripeness, minimizing waste and labor costs.
+                 </div>
+                 <div class="buttons">
+                    {% if request.user.is_authenticated %}
+                    <button><a href="products_sell" class="shop">SHOP</a></button>
+                   {%else%}
+                   <button><a href="account" class="shop">LOGIN</a></button>
+                   {%endif%}
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/lone-tree-agriculture-fields-sunset-evening-landscape-4685x2560-312.jpg' %}">
+             <div class="content">
+                 <div class="author">MODERN</div>
+                 <div class="title">HARVEST HUB</div>
+                 <div class="topic">Hydroponics</div>
+                 <div class="des">
+                     Hydroponics is a soilless farming technique where plants are grown in nutrient-rich water solutions. This method conserves water, reduces the need for pesticides, and enables cultivation in areas with poor soil quality, offering a sustainable alternative to traditional farming practices.  </div>
+                 <div class="buttons">
+                    {% if request.user.is_authenticated %}
+                     <button><a href="products_sell" class="shop">SHOP</a></button>
+                    {%else%}
+                    <button><a href="account" class="shop">LOGIN</a></button>
+                    {%endif%}
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/rice-fields-agriculture-paddy-fields-landscape-terrace-7301x4873-1247.jpg' %}">
+             <div class="content">
+                 <div class="author">MODERN</div>
+                 <div class="title">HARVEST HUB</div>
+                 <div class="topic">Genetic </div>
+                 <div class="des">
+                     Genetic modification involves altering the DNA of crops to enhance desirable traits such as resistance to pests and diseases, tolerance to environmental stresses like drought, or increased nutritional value, contributing to higher yields and improved food security. </div>
+                 <div class="buttons">
+                    {% if request.user.is_authenticated %}
+                    <button><a href="products_sell" class="shop">SHOP</a></button>
+                   {%else%}
+                   <button><a href="account" class="shop">LOGIN</a></button>
+                   {%endif%}
+                 </div>
+             </div>
+         </div>
+     </div>
+     
+     <div class="thumbnail">
+         <div class="item">
+             <img src="{% static 'images/image/landscape-lone-tree-7087x4724-9746.jpg' %}">
+             <div class="content">
+                 <div class="title">
+                     Precision
+                 </div>
+                 <div class="description">
+                     
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/tulips-field-3840x2160-16243.jpg' %}">
+             <div class="content">
+                 <div class="title">
+                     Smart Harvest
+                 </div>
+                 <div class="description">
+                     
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/lone-tree-agriculture-fields-sunset-evening-landscape-4685x2560-312.jpg' %}">
+             <div class="content">
+                 <div class="title">
+                     Hydroponics
+                 </div>
+                 <div class="description">
+                     
+                 </div>
+             </div>
+         </div>
+         <div class="item">
+             <img src="{% static 'images/image/rice-fields-agriculture-paddy-fields-landscape-terrace-7301x4873-1247.jpg' %}">
+             <div class="content">
+                 <div class="title">
+                     Genetic
+                 </div>
+                 <div class="description">
+                     
+                 </div>
+             </div>
+         </div>
+     </div>
+     <!-- next prev -->
+
+     <div class="arrows">
+         <button id="prev"><</button>
+         <button id="next">></button>
+     </div>
+     <!-- time running -->
+     <div class="time"></div>
+ </div>
+ <script>
+     //step 1: get DOM
+let nextDom = document.getElementById('next');
+let prevDom = document.getElementById('prev');
+
+let carouselDom = document.querySelector('.carousel');
+let SliderDom = carouselDom.querySelector('.carousel .list');
+let thumbnailBorderDom = document.querySelector('.carousel .thumbnail');
+let thumbnailItemsDom = thumbnailBorderDom.querySelectorAll('.item');
+let timeDom = document.querySelector('.carousel .time');
+
+thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
+let timeRunning = 3000;
+let timeAutoNext = 7000;
+
+nextDom.onclick = function(){
+    showSlider('next');    
+}
+
+prevDom.onclick = function(){
+    showSlider('prev');    
+}
+let runTimeOut;
+let runNextAuto = setTimeout(() => {
+    next.click();
+}, timeAutoNext)
+function showSlider(type){
+    let  SliderItemsDom = SliderDom.querySelectorAll('.carousel .list .item');
+    let thumbnailItemsDom = document.querySelectorAll('.carousel .thumbnail .item');
+    
+    if(type === 'next'){
+        SliderDom.appendChild(SliderItemsDom[0]);
+        thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
+        carouselDom.classList.add('next');
+    }else{
+        SliderDom.prepend(SliderItemsDom[SliderItemsDom.length - 1]);
+        thumbnailBorderDom.prepend(thumbnailItemsDom[thumbnailItemsDom.length - 1]);
+        carouselDom.classList.add('prev');
+    }
+    clearTimeout(runTimeOut);
+    runTimeOut = setTimeout(() => {
+        carouselDom.classList.remove('next');
+        carouselDom.classList.remove('prev');
+    }, timeRunning);
+
+    clearTimeout(runNextAuto);
+    runNextAuto = setTimeout(() => {
+        next.click();
+    }, timeAutoNext)
+}
+ </script>
+{% endblock content %}
+
+</html>
